@@ -1,0 +1,28 @@
+
+from symbol import Symbol
+
+class IntergalaticTransaction(object):
+
+
+    def __init__(self):
+        self.symbol = Symbol()
+
+    def setCondition(self, conditionStr):
+        if not isinstance(conditionStr, basestring):
+            return False
+
+        if 0 == conditionStr.count("\n"):
+            return self.symbol.addCondition(conditionStr)
+
+        conditions = conditionStr.split("\n")
+
+        result = True
+        for condition in conditions:
+            if False == self.symbol.addCondition(condition):
+                print "condition is not correct"
+                result = False
+
+        return True
+
+    def symbolValue(self, symbolStr):
+        return self.symbol.value(symbolStr)
