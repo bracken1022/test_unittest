@@ -61,13 +61,13 @@ class Test_Symbol_Calculate(unittest.TestCase):
         pass
 
     def test_calculate_glob_glob(self):
-        self.assertEqual((True, 2), self.symbol.Calculate(["glob", "glob"]))
+        self.assertEqual((True, 2), self.symbol.CalculateResult(["glob", "glob"]))
 
     def test_calculate_glob_prok(self):
-        self.assertEqual((True, 4), self.symbol.Calculate(["glob", "prok"]))
+        self.assertEqual((True, 4), self.symbol.CalculateResult(["glob", "prok"]))
 
     def test_calculate_invalid_input_ppro(self):
-        self.assertEqual((False, 0), self.symbol.Calculate(["ppro"]))
+        self.assertEqual((False, 0), self.symbol.CalculateResult(["ppro"]))
 
 def test_suite():
     unittest.TestLoader().LoadTestsFromTestCase(Test_Symbol_AddCondition)

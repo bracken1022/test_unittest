@@ -1,54 +1,83 @@
 
 from symbol import Symbol
+from metalunit import MetalUnit
+from inputValidation import IntergalaticTransactionInputValidation
+
 
 class IntergalaticTransaction(object):
 
 
     def __init__(self):
         self.symbol = Symbol()
-        self.metalUnit = {}
+        self.metalUnit = MetalUnit()
 
     def SetCondition(self, conditionStr):
-        if not isinstance(conditionStr, basestring):
+        inputValidation = IntergalaticTransactionInputValidation(conditionStr)
+        if inputValidation.IsInValid():
             return False
 
-        if 0 == conditionStr.count("Credit"):
+        symResult = self.__addSymbolCondition(conditionStr)
+        metalResult = self.__addMetalCondition(conditionStr)
+
+        return (symResult or metalResult)
+
+    #condition: glob is I
+    def __addSymbolCondition(self, conditionStr):
+        if 1 == conditionStr.count(" is "):
             return self.symbol.AddCondition(conditionStr)
 
-        symbolList = conditionStr.split(" ")
-        metalPosition = symbolList.index("is") - 1
-        result, number = self.symbol.Calculate(symbolList[0:metalPosition])
-        if result == False:
+        return False
+
+    #condition: glob glob Silver is 35 Credits.
+    def __addMetalCondition(self, conditionStr):
+        if 0 == conditionStr.count("Credits"):
             return False
-        
-        metalNumber = int(symbolList[metalPosition + 2]) / float(number)
-        self.metalUnit.setdefault(symbolList[metalPosition], metalNumber)
+
+        wordsList = conditionStr.split(" ")
+        metalPosition = wordsList.index("is") - 1
+
+        #such as: glob glob
+        symbols = wordsList[0:metalPosition]
+        result, number = self.symbol.CalculateResult(symbols)
+        if not result: return False
+
+        #such as: 35 Credits
+        totalValue = wordsList[metalPosition + 2]
+        metalValue = int(totalValue) / float(number)
+
+        metalName = wordsList[metalPosition]
+        self.metalUnit.AddCondition(metalName, metalValue)
         return True
 
     def CalculateResult(self, inputStr):
+
+        #input: prob
         if 0 == inputStr.count(" "):
-            result, number = self.symbol.Calculate([inputStr])
-            if False == result:
-                return self.metalUnit.get(inputStr, False)
+            result, value = self.symbol.CalculateResult([inputStr])
+            if result == False:
+                return self.metalUnit.CalculateResult(inputStr)
             else:
-                return number
+                return value
 
         
-
+        #input: prob prob Gold
         symbolList = inputStr.split(" ")
-        metalValue = self.metalUnit.get(symbolList[-1], 1)
+        metalValue = self.metalUnit.CalculateResult(symbolList[-1])
+        if False == metalValue:
+            metalValue = 1
 
 
         if 1 == metalValue:
-            result, number = self.symbol.Calculate(symbolList)
+            result, number = self.symbol.CalculateResult(symbolList)
         else:
-            result, number = self.symbol.Calculate(symbolList[0:-1])
+            result, number = self.symbol.CalculateResult(symbolList[0:-1])
 
         if True == result:
             return number * metalValue
 
         return False
 
+        
 
     def symbolValue(self, symbolStr):
         return self.symbol.value(symbolStr)

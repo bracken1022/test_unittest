@@ -1,5 +1,7 @@
 
 from rome import Rome
+from inputValidation import SymbolInputValidation
+
 
 class Symbol(object):
 
@@ -12,14 +14,8 @@ class Symbol(object):
         return self.symbolToRome.get(symbolStr, "NULL")
 
     def AddCondition(self, conditionStr):
-        
-        if False == isinstance(conditionStr, basestring):
-            return False
-
-        if 2 != conditionStr.count(" "):
-            return False
-
-        if 1 != conditionStr.count(" is "):
+        symbolInputValidation = SymbolInputValidation(conditionStr)
+        if symbolInputValidation.IsInValid():
             return False
 
         conditions = conditionStr.split(" ")
@@ -33,7 +29,7 @@ class Symbol(object):
         self.symbolToRome.setdefault(symbol, romeNumber)
         return True
 
-    def Calculate(self, symbolList):
+    def CalculateResult(self, symbolList):
         for symbol in symbolList:
             if symbol not in self.symbolToRome:
                 return False, 0
