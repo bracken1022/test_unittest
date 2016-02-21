@@ -48,9 +48,31 @@ class Test_Symbol_value(unittest.TestCase):
     def test_symbol_value_input_is_invalid(self):
         self.assertEqual("NULL", self.symbol.value("unknown"))
 
+class Test_Symbol_Calculate(unittest.TestCase):
+    
+    def setUp(self):
+        self.symbol = Symbol()
+        self.symbol.AddCondition("glob is I")
+        self.symbol.AddCondition("prok is V")
+        self.symbol.AddCondition("pish is X")
+        self.symbol.AddCondition("tegi is L")
+
+    def tearDown(self):
+        pass
+
+    def test_calculate_glob_glob(self):
+        self.assertEqual((True, 2), self.symbol.Calculate(["glob", "glob"]))
+
+    def test_calculate_glob_prok(self):
+        self.assertEqual((True, 4), self.symbol.Calculate(["glob", "prok"]))
+
+    def test_calculate_invalid_input_ppro(self):
+        self.assertEqual((False, 0), self.symbol.Calculate(["ppro"]))
+
 def test_suite():
     unittest.TestLoader().LoadTestsFromTestCase(Test_Symbol_AddCondition)
     unittest.TestLoader().LoadTestsFromTestCase(Test_Symbol_value)
+    unittest.TestLoader().LoadTestsFromTestCase(Test_Symbol_Calculate)
 
 
 
