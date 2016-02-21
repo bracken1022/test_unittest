@@ -1,5 +1,5 @@
 
-from symbol import Symbol
+from symbol import SymbolRomeConversion
 from metalunit import MetalUnit
 from inputValidation import IntergalaticTransactionInputValidation
 
@@ -8,7 +8,7 @@ class IntergalaticTransaction(object):
 
 
     def __init__(self):
-        self.symbol = Symbol()
+        self.symbol = SymbolRomeConversion()
         self.metalUnit = MetalUnit()
 
     def SetCondition(self, conditionStr):

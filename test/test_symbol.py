@@ -2,13 +2,13 @@
 
 import unittest
 
-from src.symbol import Symbol
+from src.symbol import SymbolRomeConversion
 
 class Test_Symbol_AddCondition(unittest.TestCase):
     
 
     def setUp(self):
-        self.symbol = Symbol()
+        self.symbol = SymbolRomeConversion()
 
     def tearDown(self):
         pass
@@ -30,7 +30,7 @@ class Test_Symbol_value(unittest.TestCase):
     
 
     def setUp(self):
-        self.symbol = Symbol()
+        self.symbol = SymbolRomeConversion()
         self.symbol.AddCondition("glob is I")
         self.symbol.AddCondition("prok is V")
         self.symbol.AddCondition("pish is X")
@@ -51,7 +51,7 @@ class Test_Symbol_value(unittest.TestCase):
 class Test_Symbol_Calculate(unittest.TestCase):
     
     def setUp(self):
-        self.symbol = Symbol()
+        self.symbol = SymbolRomeConversion()
         self.symbol.AddCondition("glob is I")
         self.symbol.AddCondition("prok is V")
         self.symbol.AddCondition("pish is X")

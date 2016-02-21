@@ -3,11 +3,12 @@ from rome import Rome
 from inputValidation import SymbolInputValidation
 
 
+        
+
 class Symbol(object):
 
 
     def __init__(self):
-        self.rome = Rome()
         self.symbolToRome = {}
 
     def value(self, symbolStr):
@@ -23,9 +24,6 @@ class Symbol(object):
         symbol = conditions[0]
         romeNumber = conditions[-1]
 
-        if False == self.rome.IsValid(romeNumber):
-            return False
-
         self.symbolToRome.setdefault(symbol, romeNumber)
         return True
 
@@ -36,3 +34,19 @@ class Symbol(object):
 
         romeList = [self.symbolToRome[symbol] for symbol in symbolList]
         return self.rome.Calculate(romeList)
+
+
+class SymbolRomeConversion(Symbol):
+
+
+    def __init__(self):
+        super(SymbolRomeConversion, self).__init__()
+        self.rome = Rome()
+
+    def AddCondition(self, conditionStr):
+        if False == super(SymbolRomeConversion, self).AddCondition(conditionStr):
+            return False
+
+        romeNumber = conditionStr.split(" ")[-1]
+        return self.rome.AppendRome(romeNumber)
+        

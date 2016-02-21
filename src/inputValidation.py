@@ -43,3 +43,15 @@ class SymbolInputValidation(InputValidation):
         pass
 
 
+class RomeInputValidation(InputValidation):
+
+    def IsInValid(self):
+        if super(SymbolInputValidation, self).IsInValid():
+            return True
+
+        if 2 != self.input.count(" "):
+            return True
+
+        if 1 != self.input.count(" is "):
+            return True
+        
