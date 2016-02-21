@@ -34,6 +34,9 @@ class Symbol(object):
         return True
 
     def Calculate(self, symbolList):
-        print symbolList
+        for symbol in symbolList:
+            if symbol not in self.symbolToRome:
+                return False, 0
+
         romeList = [self.symbolToRome[symbol] for symbol in symbolList]
         return self.rome.Calculate(romeList)
