@@ -75,7 +75,7 @@ class IntergalaticTransaction(object):
         if True == result:
             return number * metalValue
 
-        return False
+        return "I have no idea what you are talking about"
 
         
 

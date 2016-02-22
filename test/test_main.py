@@ -29,7 +29,7 @@ class Test_MerchantGalaxy(unittest.TestCase):
         self.assertEqual(68, self.intergalaticTransaction.CalculateResult("glob prok Silver"))
         self.assertEqual(57800, self.intergalaticTransaction.CalculateResult("glob prok Gold"))
         self.assertEqual(782, self.intergalaticTransaction.CalculateResult("glob prok Iron"))
-
+        self.assertEqual("I have no idea what you are talking about", self.intergalaticTransaction.CalculateResult("wood could a woodchuck chuck if a woodchuck could chuck wood"))
 
 
 
